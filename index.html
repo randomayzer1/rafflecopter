@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALMALI TRENDYOL LOTEREYA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 500px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #winner {
+            font-size: 20px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            color: #333;
+            display: none;
+        }
+        #winner p {
+            margin: 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #end-message {
+            display: none;
+            font-size: 18px;
+            color: #333;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .winner-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ALMALI TRENDYOL LOTEREYA</h1>
+    <button id="select-winner-btn" onclick="selectWinner()">Select Winner</button>
+    
+    <div id="winner">
+        <div id="winner-section" class="winner-section">
+            <p><strong>Winner No. <span id="winner-number">1</span>:</strong></p>
+            <p><strong>ID:</strong> <span id="winner-id"></span></p>
+            <p><strong>Prize:</strong> <span id="winner-prize"></span></p>
+        </div>
+    </div>
+    
+    <div id="end-message">
+        All winners have been selected! Thank you for participating.
+    </div>
+</div>
+
+<script>
+    const participants = [
+        { id: '157484415', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '20119399', prize: 'iPhone 16 128GB Black' },
+        { id: '150004384', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '186959352', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '20646914', prize: 'iPhone 16 128GB Black' },
+        { id: '81293826', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '78327482', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '34259251', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '72254477', prize: 'iPhone 16 128GB Black' },
+        { id: '170563705', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '92042917', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '53373009', prize: 'iPhone 16 128GB Black' },
+        { id: '38041667', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '151445956', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '23111475', prize: 'iPhone 16 128GB Black' },
+        { id: '47103554', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '91598734', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '6874558', prize: 'iPhone 16 128GB Black' },
+        { id: '28919777', prize: 'iPhone 16 128GB Black' },
+        { id: '52508501', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '15154153', prize: 'iPhone 16 128GB Black' },
+        { id: '70008237', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '41294201', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '107559376', prize: 'iPhone 16 128GB Black' },
+        { id: '120928522', prize: 'Apple AirPods Max White' },
+        { id: '26338993', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '146158337', prize: 'Apple AirPods Max White' },
+        { id: '47498418', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '126668707', prize: 'Apple iPad Air 13" M2 Wi-Fi 8/256 GB Space Gray' },
+        { id: '171192010', prize: 'Apple AirPods Max White' },
+        { id: '117862010', prize: 'Apple AirPods Max White' },
+        { id: '43607135', prize: 'Apple AirPods Max White' },
+        { id: '128120337', prize: 'Apple AirPods Max White' },
+        { id: '102909993', prize: 'Apple AirPods Max White' },
+        { id: '52638660', prize: 'Apple AirPods Max White' },
+        { id: '171345858', prize: 'iPhone 16 128GB Black' },
+        { id: '19239980', prize: 'Apple AirPods Max White' },
+        { id: '123171818', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '174198427', prize: 'Apple MacBook Pro 14.2" M3 2023 8GB/1TB Space Gray' },
+        { id: '65734323', prize: 'Apple AirPods Max White' }
+    ];
+
+    let winners = [];
+    let remainingParticipants = [...participants];
+    let winnerNumber = 1;
+
+    function selectWinner() {
+        if (remainingParticipants.length === 0) {
+            document.getElementById("select-winner-btn").disabled = true;
+            document.getElementById("end-message").style.display = "block";
+            return;
+        }
+
+        const randomIndex = Math.floor(Math.random() * remainingParticipants.length);
+        const winner = remainingParticipants.splice(randomIndex, 1)[0];
+
+        winners.push(winner);
+
+        // Display the winner
+        document.getElementById("winner-id").textContent = winner.id;
+        document.getElementById("winner-prize").textContent = winner.prize;
+        document.getElementById("winner-number").textContent = winnerNumber;
+
+        // Update the winner number
+        winnerNumber++;
+
+        document.getElementById("winner").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
